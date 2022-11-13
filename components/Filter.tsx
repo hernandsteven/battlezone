@@ -50,16 +50,31 @@ const Filter = () => {
 		if (filterType === 'game') {
 			return (
 				<div className="flex flex-row">
-					{games.map((game) => (
-						<div className="flex flex-col items-center p-2">
-							<div className="flex items-center justify-center w-20 h-20 m-2 bg-gray-200 rounded-md"></div>
-							<h1>{game}</h1>
+					{games.map((game, idx) => (
+						<div
+							key={idx}
+							className="flex flex-col items-center p-2 text-tertiary"
+						>
+							<div className="flex items-center justify-center w-20 h-20 m-2 border-2 border-gray-200 rounded-md"></div>
+							<h1 className="text-md font-semibold">{game}</h1>
+						</div>
+					))}
+				</div>
+			)
+		} else if (filterType === 'region') {
+			return (
+				<div className="flex flex-row gap-2">
+					{regions.map((region, idx) => (
+						<div
+							key={idx}
+							className="flex items-center p-2 border-2 bg-gray-200 border-tertiary hover:border-secondary rounded-md cursor-pointer text-tertiary"
+						>
+							<h1 className="text-md font-semibold">{region}</h1>
 						</div>
 					))}
 				</div>
 			)
 		} else if (filterType === 'platform') {
-		} else if (filterType === 'region') {
 		}
 	}
 	return (
@@ -69,7 +84,7 @@ const Filter = () => {
 					onClick={() => handleClick('game')}
 					className="flex flex-1 flex-row border-r border-tertiary h-full items-center justify-between p-4 gap-2 cursor-pointer"
 				>
-					<h1 className="flex flex-1">Select your game</h1>
+					<h1 className="whitespace-nowrap">Select your game</h1>
 					<motion.div
 						animate={{
 							rotate: clicked && filter === 'game' ? -180 : 0,
@@ -85,7 +100,7 @@ const Filter = () => {
 					onClick={() => handleClick('region')}
 					className="flex flex-1 flex-row border-r border-tertiary h-full items-center justify-between p-4 gap-2 cursor-pointer"
 				>
-					<h1 className="">Select Region</h1>
+					<h1 className="whitespace-nowrap">Select Region</h1>
 					<motion.div
 						animate={{
 							rotate: clicked && filter === 'region' ? -180 : 0,
@@ -101,7 +116,7 @@ const Filter = () => {
 					onClick={() => handleClick('platform')}
 					className="flex flex-1 flex-row h-full items-center justify-between p-4 gap-2 cursor-pointer"
 				>
-					<h1 className="">Select Platform</h1>
+					<h1 className="whitespace-nowrap">Select Platform</h1>
 					<motion.div
 						animate={{
 							rotate: clicked && filter === 'platform' ? -180 : 0,

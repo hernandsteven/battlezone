@@ -11,7 +11,7 @@ const Sidebar = () => {
 				<div className="h-[0.1px] w-full bg-primary"></div>
 			</div>
 
-			<section className="flex flex-col text-base mt-4">
+			<section className="flex flex-col text-base mt-4 font-semibold">
 				<Link
 					href="/"
 					className="flex gap-3 items-end w-full flex-row p-6 border-b border-t"
