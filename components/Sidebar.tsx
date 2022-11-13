@@ -1,3 +1,4 @@
+'use client'
 import { AiOutlineHome } from 'react-icons/ai'
 import { TbTournament } from 'react-icons/tb'
 import Link from 'next/link'

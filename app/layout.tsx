@@ -1,13 +1,72 @@
-'use client'
 import Filter from '../components/Filter'
 import Sidebar from '../components/Sidebar'
 import './globals.css'
+import { Provider } from './provider'
 
-export default function RootLayout({
+import {
+	CookieOptions,
+	createServerSupabaseClient as _createServerSupabaseClient,
+} from '@supabase/auth-helpers-shared'
+import { cookies, headers } from 'next/headers'
+
+function createServerSupabaseClient<
+	Database = any,
+	SchemaName extends string & keyof Database = 'public' extends keyof Database
+		? 'public'
+		: string & keyof Database
+>({
+	cookieOptions,
+}: {
+	cookieOptions?: CookieOptions
+} = {}) {
+	if (
+		!process.env.NEXT_PUBLIC_SUPABASE_URL ||
+		!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+	) {
+		throw new Error(
+			'NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env variables are required!'
+		)
+	}
+
+	return _createServerSupabaseClient<Database, SchemaName>({
+		supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+		supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+		getRequestHeader: (key) => headers().get(key) ?? undefined,
+
+		getCookie(name) {
+			return cookies().get(name)?.value
+		},
+		setCookie(name, value, options) {
+			// TODO: figure out how to access response object
+			// const newSetCookies = filterCookies(
+			//   ensureArray(context.res.getHeader('set-cookie')?.toString() ?? []),
+			//   name
+			// );
+			// const newSessionStr = serializeCookie(name, value, {
+			//   ...options,
+			//   // Allow supabase-js on the client to read the cookie as well
+			//   httpOnly: false
+			// });
+			// context.res.setHeader('set-cookie', [...newSetCookies, newSessionStr]);
+		},
+		options: {
+			global: {
+				// fetch // TODO: is this needed?
+			},
+		},
+		cookieOptions,
+	})
+}
+
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
+	const supabase = createServerSupabaseClient()
+	let session = await supabase.auth.getSession()
+
+	//console.log(session.data.session, 'from server')
 	return (
 		<html lang="en">
 			{/*
@@ -16,13 +75,15 @@ export default function RootLayout({
       */}
 			<head />
 			<body>
-				<div className="flex h-full ">
-					<Sidebar />
-					<div className="flex flex-col w-full">
-						<Filter />
-						<div className="overflow-y-auto">{children}</div>
+				<Provider session={session.data.session}>
+					<div className="flex h-full ">
+						<Sidebar />
+						<div className="flex flex-col w-full">
+							<Filter />
+							<div className="overflow-y-auto">{children}</div>
+						</div>
 					</div>
-				</div>
+				</Provider>
 			</body>
 		</html>
 	)
