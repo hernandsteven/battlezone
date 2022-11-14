@@ -8,6 +8,8 @@ import {
 	createServerSupabaseClient as _createServerSupabaseClient,
 } from '@supabase/auth-helpers-shared'
 import { cookies, headers } from 'next/headers'
+import { Suspense } from 'react'
+import AppLayout from '../components/AppLayout'
 
 function createServerSupabaseClient<
 	Database = any,
@@ -64,7 +66,7 @@ export default async function RootLayout({
 	children: React.ReactNode
 }) {
 	const supabase = createServerSupabaseClient()
-	let session = await supabase.auth.getSession()
+	const session = await supabase.auth.getSession()
 
 	//console.log(session.data.session, 'from server')
 	return (
@@ -76,13 +78,7 @@ export default async function RootLayout({
 			<head />
 			<body>
 				<Provider session={session.data.session}>
-					<div className="flex h-full ">
-						<Sidebar />
-						<div className="flex flex-col w-full">
-							<Filter />
-							<div className="overflow-y-auto">{children}</div>
-						</div>
-					</div>
+					<AppLayout children={children} />
 				</Provider>
 			</body>
 		</html>
