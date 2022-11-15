@@ -24,7 +24,7 @@ const Filter = () => {
 	const [platform, setPlatform] = useState<string>('')
 	const [region, setRegion] = useState<string>('')
 
-	const [clicked, setClicked] = useState<boolean>(false)
+	const [isClicked, setClicked] = useState<boolean>(false)
 	const [filter, setFilter] = useState<string>('')
 	const [games, setGames] = useState<string[]>([])
 	const [regions, setRegions] = useState([
@@ -39,7 +39,7 @@ const Filter = () => {
 	const handleClick = (filterType: string) => {
 		// If the filter is already open, close it and clear the filter state
 		if (filterType === '' || filterType === filter) {
-			setClicked(!clicked)
+			setClicked(!isClicked)
 			setFilter('')
 			// If the filter is closed, open it and set the filter
 		} else {
@@ -61,10 +61,13 @@ const Filter = () => {
 	const handleOptionClick = (option: string) => {
 		if (filter === 'game') {
 			setSelectedGame(option)
-		} else if (filter === 'platform') {
-			setSelectedPlatform(option)
+			handleClick('region')
 		} else if (filter === 'region') {
 			setSelectedRegion(option)
+			handleClick('platform')
+		} else if (filter === 'platform') {
+			setSelectedPlatform(option)
+			setFilter('')
 		}
 		setClicked(false)
 	}
@@ -156,12 +159,11 @@ const Filter = () => {
 			.order('platforms', { ascending: true })
 
 		if (data) {
-			setPlatforms(data[0].platforms ?? [])
+			setPlatforms(data[0]?.platforms ?? [])
 		}
 
 		if (error) {
 			console.log(error)
-			setPlatforms([])
 		}
 	}
 
@@ -199,10 +201,10 @@ const Filter = () => {
 		<>
 			{localSession && (
 				<>
-					<div className="flex flex-row border-b border-tertiary h-32 bg-secondary text-xl">
+					<div className="flex flex-row border-b border-tertiary h-32 bg-secondary text-xl min-h-fit">
 						<div
 							onClick={() => handleClick('game')}
-							className="flex flex-1 flex-row border-r border-tertiary h-full items-center justify-between p-4 gap-2 cursor-pointer"
+							className="flex flex-1 flex-row border-r border-tertiary items-center justify-between p-4  gap-2 cursor-pointer"
 						>
 							<h1 className="whitespace-nowrap">
 								{game ? game : 'Select your game'}
@@ -210,13 +212,19 @@ const Filter = () => {
 							<motion.div
 								animate={{
 									rotate:
-										clicked && filter === 'game' ? -180 : 0,
+										isClicked && filter === 'game'
+											? -180
+											: 0,
 								}}
 								transition={{
 									duration: 0.3,
 								}}
 							>
-								<BsArrowDownShort className="flex flex-1 text-3xl" />
+								<BsArrowDownShort
+									className={`flex flex-1 text-3xl ${
+										filter === 'game' ? 'bg-quaternary' : ''
+									} rounded-full`}
+								/>
 							</motion.div>
 						</div>
 						<div
@@ -229,7 +237,7 @@ const Filter = () => {
 							<motion.div
 								animate={{
 									rotate:
-										clicked && filter === 'region'
+										isClicked && filter === 'region'
 											? -180
 											: 0,
 								}}
@@ -237,7 +245,13 @@ const Filter = () => {
 									duration: 0.3,
 								}}
 							>
-								<BsArrowDownShort className="flex flex-1 text-3xl" />
+								<BsArrowDownShort
+									className={`flex flex-1 text-3xl ${
+										filter === 'region'
+											? 'bg-quaternary'
+											: ''
+									} rounded-full`}
+								/>
 							</motion.div>
 						</div>
 						<div
@@ -250,7 +264,7 @@ const Filter = () => {
 							<motion.div
 								animate={{
 									rotate:
-										clicked && filter === 'platform'
+										isClicked && filter === 'platform'
 											? -180
 											: 0,
 								}}
@@ -258,12 +272,18 @@ const Filter = () => {
 									duration: 0.3,
 								}}
 							>
-								<BsArrowDownShort className="flex flex-1 text-3xl" />
+								<BsArrowDownShort
+									className={`flex flex-1 text-3xl ${
+										filter === 'platform'
+											? 'bg-quaternary'
+											: ''
+									} rounded-full`}
+								/>
 							</motion.div>
 						</div>
 					</div>
 					<AnimatePresence>
-						{clicked && (
+						{isClicked && (
 							<motion.div
 								key="content"
 								initial="collapsed"
