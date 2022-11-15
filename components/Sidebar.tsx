@@ -20,35 +20,37 @@ const Sidebar = () => {
 	}, [sessionState])
 
 	return (
-		<div className="relative flex flex-col w-60 bg-tertiary ">
-			<h1 className="p-4 text-3xl">BattleZone</h1>
+		<div className="flex flex-col w-60 bg-tertiary justify-between ">
+			<div>
+				<h1 className="p-4 text-3xl">BattleZone</h1>
 
-			<section className="relative flex flex-col text-base mt-4 font-semibold">
-				<Link
-					href="/"
-					className="flex gap-3 items-end w-full flex-row p-6 border-b border-t"
-				>
-					<AiOutlineHome className="text-2xl" />
-					<h1>Home</h1>
-				</Link>
-				<Link
-					href="/create-tournament"
-					className="flex gap-2 w-full flex-row p-6 whitespace-nowrap border-b"
-				>
-					<TbTournament className="text-3xl" />
-					<h1>Create Tournaments</h1>
-				</Link>
-				{localSession && (
-					<button
-						className="bg-quaternary border-solid border-12 border-primary p-2 m-12 rounded-md"
-						onClick={() => {
-							supabase.auth.signOut()
-						}}
+				<section className="relative flex flex-col text-base mt-4 font-semibold">
+					<Link
+						href="/"
+						className="flex gap-3 items-end w-full flex-row p-6 border-b border-t"
 					>
-						Sign Out
-					</button>
-				)}
-			</section>
+						<AiOutlineHome className="text-2xl" />
+						<h1>Home</h1>
+					</Link>
+					<Link
+						href="/create-tournament"
+						className="flex gap-2 w-full flex-row p-6 whitespace-nowrap border-b"
+					>
+						<TbTournament className="text-3xl" />
+						<h1>Create Tournaments</h1>
+					</Link>
+				</section>
+			</div>
+			{localSession && (
+				<button
+					className="bg-quaternary border-solid border-12 border-primary p-2 ml-10 mr-10 mb-5 rounded-md"
+					onClick={() => {
+						supabase.auth.signOut()
+					}}
+				>
+					Sign Out
+				</button>
+			)}
 		</div>
 	)
 }
