@@ -21,12 +21,21 @@ const Filter = () => {
 	)
 
 	const [game, setGame] = useState<string>('')
+	const [gameImage, setGameImage] = useState<string>('')
 	const [platform, setPlatform] = useState<string>('')
 	const [region, setRegion] = useState<string>('')
 
 	const [isClicked, setClicked] = useState<boolean>(false)
 	const [filter, setFilter] = useState<string>('')
-	const [games, setGames] = useState<string[]>([])
+	interface GameStructure {
+		id: number
+		created_at: string
+		title: string
+		platforms: []
+		image: string
+	}
+
+	const [games, setGames] = useState<GameStructure[]>([])
 	const [regions, setRegions] = useState([
 		'North America',
 		'Europe',
@@ -76,17 +85,21 @@ const Filter = () => {
 	const handleFilter = (filterType: string) => {
 		if (filterType === 'game') {
 			return (
-				<div className="flex flex-row max-w-md">
-					{games.map((title, idx) => (
+				<div className="flex flex-row max-w-[40rem]">
+					{games.map(({ title, image }, idx) => (
 						<div
 							key={idx}
 							className="flex flex-col items-center p-2 text-tertiary"
 							onClick={() => {
 								handleOptionClick(title)
+								setGameImage(image)
 							}}
 						>
-							<div className="flex items-center justify-center w-20 h-20 m-2 border-2 border-gray-200 rounded-md"></div>
-							<h1 className="text-md font-semibold pl-4 pr-4">
+							<div
+								style={{ backgroundImage: `url('${image}')` }}
+								className="flex items-center justify-center w-20 h-20 m-2 bg-no-repeat bg-cover bg-center rounded-md"
+							></div>
+							<h1 className="text-sm font-semibold pl-4 pr-4 leading-none">
 								{title}
 							</h1>
 						</div>
@@ -132,18 +145,12 @@ const Filter = () => {
 	const fetchGames = async () => {
 		const { data, error } = await supabase
 			.from('games')
-			.select('title')
+			.select()
 			.order('title', { ascending: true })
 
 		if (data) {
 			console.log(data)
-			let gameList: string[] = []
-
-			data.forEach(({ title }) => {
-				gameList.push(title)
-			})
-
-			setGames(gameList)
+			setGames(data)
 		}
 
 		if (error) {
@@ -206,9 +213,17 @@ const Filter = () => {
 							onClick={() => handleClick('game')}
 							className="flex flex-1 flex-row border-r border-tertiary items-center justify-between p-4  gap-2 cursor-pointer"
 						>
-							<h1 className="whitespace-nowrap">
-								{game ? game : 'Select your game'}
-							</h1>
+							<div className="flex flex-row gap-2 bg-cover bg-no-repeat bg-center items-center">
+								<div
+									style={{
+										backgroundImage: `url('${gameImage}')`,
+									}}
+									className="flex items-center justify-center w-20 h-20 m-2 bg-no-repeat bg-cover bg-center rounded-md"
+								></div>
+								<h1 className="whitespace-nowrap">
+									{game ? game : 'Select your game'}
+								</h1>
+							</div>
 							<motion.div
 								animate={{
 									rotate:
@@ -222,7 +237,9 @@ const Filter = () => {
 							>
 								<BsArrowDownShort
 									className={`flex flex-1 text-3xl ${
-										filter === 'game' ? 'bg-quaternary' : ''
+										isClicked && filter === 'game'
+											? 'bg-quaternary'
+											: ''
 									} rounded-full`}
 								/>
 							</motion.div>
@@ -247,7 +264,7 @@ const Filter = () => {
 							>
 								<BsArrowDownShort
 									className={`flex flex-1 text-3xl ${
-										filter === 'region'
+										isClicked && filter === 'region'
 											? 'bg-quaternary'
 											: ''
 									} rounded-full`}
@@ -274,7 +291,7 @@ const Filter = () => {
 							>
 								<BsArrowDownShort
 									className={`flex flex-1 text-3xl ${
-										filter === 'platform'
+										isClicked && filter === 'platform'
 											? 'bg-quaternary'
 											: ''
 									} rounded-full`}
