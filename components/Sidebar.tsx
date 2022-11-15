@@ -20,12 +20,8 @@ const Sidebar = () => {
 	}, [sessionState])
 
 	return (
-		<div className="flex flex-col w-60 bg-tertiary ">
+		<div className="relative flex flex-col w-60 bg-tertiary ">
 			<h1 className="p-4 text-3xl">BattleZone</h1>
-
-			<div className="pl-2 pr-2">
-				<div className="h-[0.1px] w-full bg-primary"></div>
-			</div>
 
 			<section className="relative flex flex-col text-base mt-4 font-semibold">
 				<Link
@@ -44,7 +40,7 @@ const Sidebar = () => {
 				</Link>
 				{localSession && (
 					<button
-						className="bg-quaternary p-2 m-12 rounded-md"
+						className="bg-quaternary border-solid border-12 border-primary p-2 m-12 rounded-md"
 						onClick={() => {
 							supabase.auth.signOut()
 						}}

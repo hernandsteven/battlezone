@@ -1,5 +1,6 @@
 'use client'
 import { Session } from '@supabase/auth-helpers-nextjs'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { BsArrowDownShort } from 'react-icons/bs'
@@ -7,29 +8,25 @@ import useFilterStore from '../stores/filterStore'
 import useSessionStore from '../stores/sessionStore'
 
 const Filter = () => {
+	const supabase = useSupabaseClient()
 	const sessionState = useSessionStore((state) => state.session)
+
 	const selectedGame = useFilterStore((state) => state.selectedGame)
 	const setSelectedGame = useFilterStore((state) => state.setSelectedGame)
+	const selectedRegion = useFilterStore((state) => state.selectedRegion)
+	const setSelectedRegion = useFilterStore((state) => state.setSelectedRegion)
 	const selectedPlatform = useFilterStore((state) => state.selectedPlatform)
 	const setSelectedPlatform = useFilterStore(
 		(state) => state.setSelectedPlatform
 	)
 
-	const [game, setGame] = useState('')
-	const [platform, setPlatform] = useState('')
-	const [region, setRegion] = useState('')
+	const [game, setGame] = useState<string>('')
+	const [platform, setPlatform] = useState<string>('')
+	const [region, setRegion] = useState<string>('')
 
-	const selectedRegion = useFilterStore((state) => state.selectedRegion)
-	const setSelectedRegion = useFilterStore((state) => state.setSelectedRegion)
-	const [clicked, setClicked] = useState(false)
-	const [filter, setFilter] = useState('')
-	const [games, setGames] = useState([
-		'CS:GO',
-		'Valorant',
-		'Apex Legends',
-		'Rocket League',
-		'Hearthstone',
-	])
+	const [clicked, setClicked] = useState<boolean>(false)
+	const [filter, setFilter] = useState<string>('')
+	const [games, setGames] = useState<string[]>([])
 	const [regions, setRegions] = useState([
 		'North America',
 		'Europe',
@@ -37,17 +34,14 @@ const Filter = () => {
 		'Australia',
 		'South America',
 	])
-	const [platforms, setPlatforms] = useState([
-		'PC',
-		'Xbox',
-		'Playstation',
-		'Switch',
-	])
+	const [platforms, setPlatforms] = useState<string[]>([])
 
 	const handleClick = (filterType: string) => {
+		// If the filter is already open, close it and clear the filter state
 		if (filterType === '' || filterType === filter) {
 			setClicked(!clicked)
 			setFilter('')
+			// If the filter is closed, open it and set the filter
 		} else {
 			setClicked(false)
 			setTimeout(() => {
@@ -75,20 +69,23 @@ const Filter = () => {
 		setClicked(false)
 	}
 
+	// Returns the options for the filter based on the filter state (game, platform, region)
 	const handleFilter = (filterType: string) => {
 		if (filterType === 'game') {
 			return (
-				<div className="flex flex-row">
-					{games.map((game, idx) => (
+				<div className="flex flex-row max-w-md">
+					{games.map((title, idx) => (
 						<div
 							key={idx}
 							className="flex flex-col items-center p-2 text-tertiary"
 							onClick={() => {
-								handleOptionClick(game)
+								handleOptionClick(title)
 							}}
 						>
 							<div className="flex items-center justify-center w-20 h-20 m-2 border-2 border-gray-200 rounded-md"></div>
-							<h1 className="text-md font-semibold">{game}</h1>
+							<h1 className="text-md font-semibold pl-4 pr-4">
+								{title}
+							</h1>
 						</div>
 					))}
 				</div>
@@ -129,6 +126,57 @@ const Filter = () => {
 			)
 		}
 	}
+	const fetchGames = async () => {
+		const { data, error } = await supabase
+			.from('games')
+			.select('title')
+			.order('title', { ascending: true })
+
+		if (data) {
+			console.log(data)
+			let gameList: string[] = []
+
+			data.forEach(({ title }) => {
+				gameList.push(title)
+			})
+
+			setGames(gameList)
+		}
+
+		if (error) {
+			console.log(error)
+		}
+	}
+
+	const fetchPlatforms = async () => {
+		const { data, error } = await supabase
+			.from('games')
+			.select('platforms')
+			.eq('title', selectedGame)
+			.order('platforms', { ascending: true })
+
+		if (data) {
+			setPlatforms(data[0].platforms ?? [])
+		}
+
+		if (error) {
+			console.log(error)
+			setPlatforms([])
+		}
+	}
+
+	// Fetches games on first render
+	useEffect(() => {
+		fetchGames()
+	}, [])
+
+	// Fetches platforms when selected game changes and resets selected platform
+	useEffect(() => {
+		fetchPlatforms()
+		setSelectedPlatform('')
+	}, [selectedGame])
+
+	/* Hydration Error Fix, retieve session information from local storage */
 	const [localSession, setLocalSession] = useState<Session | null>(null)
 
 	useEffect(() => {
@@ -146,7 +194,7 @@ const Filter = () => {
 			setPlatform(selectedPlatform)
 		}
 	})
-
+	//
 	return (
 		<>
 			{localSession && (
