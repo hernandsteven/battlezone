@@ -11,7 +11,8 @@ export default function Tournaments({ tournaments }: TournamentsProps) {
 			<h1 className="text-3xl text-center font-semibold underline underline-offset-8 decoration-quaternary p-4">
 				Tournaments
 			</h1>
-			<section className="m-4 grid grid-cols-2 grid-flow-dense gap-10">
+			<section className="m-4 grid grid-cols-2 grid-flow-dense gap-12">
+				<TournamentCard title="Fortnite PC Cash Cup" />
 				<TournamentCard title="Fortnite PC Cash Cup" />
 				<TournamentCard title="Fortnite PC Cash Cup" />
 				<TournamentCard title="Fortnite PC Cash Cup" />
