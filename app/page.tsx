@@ -15,7 +15,7 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="flex bg-primary w-full p-4">
+			<div className="flex bg-primary w-full p-4 h-screen">
 				{!session && (
 					<div className="flex mx-auto self-center">
 						<Auth
