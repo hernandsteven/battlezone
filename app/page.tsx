@@ -5,8 +5,6 @@ import {
 	useSupabaseClient,
 	useUser,
 } from '@supabase/auth-helpers-react'
-import useSessionStore from '../stores/sessionStore'
-import { useEffect, useState } from 'react'
 import Tournaments from '../components/Tournaments'
 
 export default function Home() {
