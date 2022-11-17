@@ -5,11 +5,11 @@ interface FilterState {
     selectedGame: string,
     selectedRegion: string,
     selectedPlatform: string,
-    gameImage: string,
+    selectedGameImage: string,
     setSelectedGame: (selectedGame: string) => void,
     setSelectedRegion: (selectedRegion: string) => void,
     setSelectedPlatform: (selectedPlatform: string) => void,
-
+    setSelectedGameImage: (gameImage: string) => void,
 }
 
 const useFilterStore = create<FilterState>()(
@@ -19,11 +19,11 @@ const useFilterStore = create<FilterState>()(
                 selectedGame:'',
                 selectedRegion:'',
                 selectedPlatform:'',
-                gameImage:'',
+                selectedGameImage:'',
                 setSelectedGame: (selectedGame) => set({ selectedGame }),
                 setSelectedRegion: (selectedRegion) => set({ selectedRegion }),
                 setSelectedPlatform: (selectedPlatform) => set({ selectedPlatform }),
-                setSelectedGameImage: (gameImage: string) => set({ gameImage }),
+                setSelectedGameImage: (selectedGameImage) => set({ selectedGameImage }),
             }),
             {
                 name: 'filter-storage',

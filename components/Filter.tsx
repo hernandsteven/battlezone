@@ -17,6 +17,10 @@ const Filter = () => {
 	const setSelectedPlatform = useFilterStore(
 		(state) => state.setSelectedPlatform
 	)
+	const selectedGameImage = useFilterStore((state) => state.selectedGameImage)
+	const setSelectedGameImage = useFilterStore(
+		(state) => state.setSelectedGameImage
+	)
 
 	const [game, setGame] = useState<string>('')
 	const [gameImage, setGameImage] = useState<string>('')
@@ -91,6 +95,7 @@ const Filter = () => {
 							onClick={() => {
 								handleOptionClick(title)
 								setGameImage(image)
+								setSelectedGameImage(image)
 							}}
 						>
 							<div
@@ -186,6 +191,7 @@ const Filter = () => {
 	// If user is signed in, fetch their games from cache
 	useEffect(() => {
 		if (session) {
+			setGameImage(selectedGameImage)
 			setGame(selectedGame)
 			setRegion(selectedRegion)
 			setPlatform(selectedPlatform)
