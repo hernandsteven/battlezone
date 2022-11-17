@@ -1,11 +1,28 @@
+import { MdDateRange } from 'react-icons/md'
+import { AiOutlineClockCircle } from 'react-icons/ai'
+import { IoGameControllerOutline } from 'react-icons/io5'
+import { FaGlobeAmericas } from 'react-icons/fa'
 interface TournamentCardProps {
 	title: string
 	image?: string
+	game?: string
+	platform?: string
+	region?: string
+	date?: string
+	startTime?: string
 }
 
-export default function TournamentCard({ title, image }: TournamentCardProps) {
+export default function TournamentCard({
+	title,
+	image,
+	game,
+	platform,
+	region,
+	date,
+	startTime,
+}: TournamentCardProps) {
 	return (
-		<div className="h-96 rounded cursor-pointer w-96">
+		<div className="md:h-72 md:w-72 lg:h-96 lg:w-96 rounded cursor-pointer ">
 			<div className="h-4/6 bg-white bg-opacity-20 backdrop-blur-lg rounded-t-md p-1 ">
 				<div
 					style={{
@@ -15,8 +32,33 @@ export default function TournamentCard({ title, image }: TournamentCardProps) {
 					className="bg-no-repeat bg-cover bg-center w-full h-full rounded-t-md"
 				></div>
 			</div>
-			<div className="h-2/6 mt-1 bg-quaternary bg-opacity-70 backdrop-blur-lg rounded-b-md ">
-				<h1>{title}</h1>
+			<div className="flex flex-col gap-1 h-2/6 mt-1 p-2 bg-quaternary bg-opacity-70 backdrop-blur-lg rounded-b-md ">
+				<h1 className="font-semibold">{title}</h1>
+				<div className="w-full h-[1px] bg-primary center rounded-md"></div>
+				<div className="flex flex-col gap-4">
+					<div className="flex flex-row justify-between">
+						<div className="flex flex-row gap-1">
+							<IoGameControllerOutline className="w-7 h-7 text-white" />
+							<h1>Halo Infinte</h1>
+						</div>
+
+						<div className="flex flex-row gap-1">
+							<FaGlobeAmericas className="w-7 h-7" />
+							<h1>South America</h1>
+						</div>
+					</div>
+
+					<div className="flex flex-row justify-between">
+						<div className="flex flex-row items-center gap-1">
+							<MdDateRange className="w-7 h-7" />
+							<h1>10/25/2022</h1>
+						</div>
+						<div className="flex flex-row items-center gap-1">
+							<AiOutlineClockCircle className="w-7 h-7" />
+							<h1>12:00 PM EST</h1>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
