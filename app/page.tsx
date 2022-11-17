@@ -15,7 +15,7 @@ export default function Home() {
 
 	return (
 		<>
-			<div className="flex bg-primary w-full p-4 h-screen">
+			<div className="flex bg-primary w-full p-4">
 				{!session && (
 					<div className="flex mx-auto self-center">
 						<Auth
@@ -34,7 +34,7 @@ export default function Home() {
 					</div>
 				)}
 				{session && (
-					<div className="flex flex-col w-full">
+					<div className="flex flex-col w-full h-full">
 						<Tournaments tournaments={{}} />
 					</div>
 				)}
