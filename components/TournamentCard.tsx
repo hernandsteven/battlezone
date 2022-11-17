@@ -1,7 +1,7 @@
 import { MdDateRange } from 'react-icons/md'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { IoGameControllerOutline } from 'react-icons/io5'
-import { FaGlobeAmericas } from 'react-icons/fa'
+import { IoMdGlobe } from 'react-icons/io'
 interface TournamentCardProps {
 	title: string
 	image?: string
@@ -43,7 +43,7 @@ export default function TournamentCard({
 						</div>
 
 						<div className="flex flex-row gap-1">
-							<FaGlobeAmericas className="w-7 h-7" />
+							<IoMdGlobe className="w-7 h-7" />
 							<h1>South America</h1>
 						</div>
 					</div>
