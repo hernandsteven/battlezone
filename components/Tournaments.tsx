@@ -12,15 +12,15 @@ export default function Tournaments({ tournaments }: TournamentsProps) {
 				Tournaments
 			</h1>
 			<section className="m-4 grid grid-cols-2 grid-flow-dense gap-12">
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
-				<TournamentCard title="Fortnite PC Cash Cup" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
+				<TournamentCard title="Halo Infinite HCS FFA Tournament" />
 			</section>
 		</div>
 	)
