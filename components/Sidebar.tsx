@@ -3,21 +3,16 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { TbTournament } from 'react-icons/tb'
 import Link from 'next/link'
 import useSessionStore from '../stores/sessionStore'
-import { Session, useSupabaseClient } from '@supabase/auth-helpers-react'
+import {
+	Session,
+	useSession,
+	useSupabaseClient,
+} from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 
 const Sidebar = () => {
 	const supabase = useSupabaseClient()
-	const sessionState = useSessionStore((state) => state.session)
-	const [localSession, setLocalSession] = useState<Session | null>(null)
-
-	useEffect(() => {
-		if (sessionState) {
-			setLocalSession(sessionState)
-		} else {
-			setLocalSession(null)
-		}
-	}, [sessionState])
+	const session = useSession()
 
 	return (
 		<div className="flex flex-col w-60 bg-tertiary justify-between ">
@@ -41,7 +36,7 @@ const Sidebar = () => {
 					</Link>
 				</section>
 			</div>
-			{localSession && (
+			{session && (
 				<button
 					className="bg-quaternary border-solid border-12 border-primary p-2 ml-10 mr-10 mb-5 rounded-md"
 					onClick={() => {

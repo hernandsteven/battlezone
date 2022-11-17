@@ -1,15 +1,13 @@
 'use client'
-import { Session } from '@supabase/auth-helpers-nextjs'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { BsArrowDownShort } from 'react-icons/bs'
 import useFilterStore from '../stores/filterStore'
-import useSessionStore from '../stores/sessionStore'
 
 const Filter = () => {
 	const supabase = useSupabaseClient()
-	const sessionState = useSessionStore((state) => state.session)
+	const session = useSession()
 
 	const selectedGame = useFilterStore((state) => state.selectedGame)
 	const setSelectedGame = useFilterStore((state) => state.setSelectedGame)
@@ -55,7 +53,7 @@ const Filter = () => {
 			setClicked(false)
 			setTimeout(() => {
 				setClicked(true)
-			}, 300)
+			}, 200)
 		}
 
 		if (filterType === 'game') {
@@ -185,19 +183,9 @@ const Filter = () => {
 		setSelectedPlatform('')
 	}, [selectedGame])
 
-	/* Hydration Error Fix, retieve session information from local storage */
-	const [localSession, setLocalSession] = useState<Session | null>(null)
-
+	// If user is signed in, fetch their games from cache
 	useEffect(() => {
-		if (sessionState) {
-			setLocalSession(sessionState)
-		} else {
-			setLocalSession(null)
-		}
-	}, [sessionState])
-
-	useEffect(() => {
-		if (sessionState) {
+		if (session) {
 			setGame(selectedGame)
 			setRegion(selectedRegion)
 			setPlatform(selectedPlatform)
@@ -206,7 +194,7 @@ const Filter = () => {
 	//
 	return (
 		<>
-			{localSession && (
+			{session && (
 				<>
 					<div className="flex flex-row border-b border-tertiary h-32 bg-secondary text-xl min-h-fit">
 						<div
@@ -214,12 +202,14 @@ const Filter = () => {
 							className="flex flex-1 flex-row border-r border-tertiary items-center justify-between p-4  gap-2 cursor-pointer"
 						>
 							<div className="flex flex-row gap-2 bg-cover bg-no-repeat bg-center items-center">
-								<div
-									style={{
-										backgroundImage: `url('${gameImage}')`,
-									}}
-									className="flex items-center justify-center w-20 h-20 m-2 bg-no-repeat bg-cover bg-center rounded-md"
-								></div>
+								{gameImage && (
+									<div
+										style={{
+											backgroundImage: `url('${gameImage}')`,
+										}}
+										className="flex items-center justify-center w-20 h-20 m-2 bg-no-repeat bg-cover bg-center rounded-md"
+									></div>
+								)}
 								<h1 className="whitespace-nowrap">
 									{game ? game : 'Select your game'}
 								</h1>

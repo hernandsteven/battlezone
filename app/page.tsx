@@ -11,47 +11,13 @@ import { useEffect, useState } from 'react'
 
 export default function Home() {
 	const supabase = useSupabaseClient()
-	const setSession = useSessionStore((state) => state.setSession)
 	const session = useSession()
-	const [localSession, setLocalSession] = useState<Session | null>(null)
-	const [displayName, setDisplayName] = useState<string | null>(null)
-
-	useEffect(() => {
-		if (session) {
-			setSession(session)
-			setLocalSession(session)
-		} else {
-			setSession(null)
-			setLocalSession(null)
-		}
-	}, [session])
-
-	useEffect(() => {
-		setName()
-	}, [])
-
-	const updateUser = async () => {
-		const { data, error } = await supabase.auth.updateUser({
-			data: { displayName: 'Slick' },
-		})
-
-		setName()
-	}
-
-	const setName = async () => {
-		const {
-			data: { user },
-		} = await supabase.auth.getUser()
-
-		if (user) {
-			setDisplayName(user.user_metadata.displayName)
-		}
-	}
+	const user = useUser()
 
 	return (
 		<>
 			<div className="flex bg-primary h-[100vh] w-full p-4">
-				{!localSession && (
+				{!session && (
 					<div className="flex mx-auto self-center">
 						<Auth
 							supabaseClient={supabase}
@@ -68,18 +34,10 @@ export default function Home() {
 						/>
 					</div>
 				)}
-				{localSession && (
+				{session && (
 					<div className="flex mx-auto self-center">
-						<h1 className="text-white text-2xl">
-							Welcome {displayName}
-						</h1>
-						<button
-							onClick={() => {
-								updateUser()
-							}}
-						>
-							Update me
-						</button>
+						<h1 className="text-white text-2xl">{user?.id}</h1>
+						<button onClick={() => {}}>Update me</button>
 					</div>
 				)}
 			</div>
