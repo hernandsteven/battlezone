@@ -91,11 +91,11 @@ const Filter = () => {
     const handleFilter = (filterType: string) => {
         if (filterType === "game") {
             return (
-                <div className="flex flex-row max-w-[40rem]">
+                <div className="flex max-w-[40rem] flex-row">
                     {games.map(({ title, image }, idx) => (
                         <div
                             key={idx}
-                            className="flex flex-col items-center p-2 text-tertiary cursor-pointer"
+                            className="flex cursor-pointer flex-col items-center p-2 text-tertiary"
                             onClick={() => {
                                 handleOptionClick(title);
                                 setGameImage(image);
@@ -104,9 +104,9 @@ const Filter = () => {
                         >
                             <div
                                 style={{ backgroundImage: `url('${image}')` }}
-                                className="flex items-center justify-center w-20 h-20 m-2 bg-no-repeat bg-cover bg-center rounded-md"
+                                className="m-2 flex h-20 w-20 items-center justify-center rounded-md bg-cover bg-center bg-no-repeat"
                             ></div>
-                            <h1 className="text-sm font-semibold pl-4 pr-4 leading-none">
+                            <h1 className="pl-4 pr-4 text-sm font-semibold leading-none">
                                 {title}
                             </h1>
                         </div>
@@ -119,7 +119,7 @@ const Filter = () => {
                     {regions.map((region, idx) => (
                         <div
                             key={idx}
-                            className="flex items-center p-2 border-2 bg-gray-200 border-tertiary hover:border-secondary rounded-md cursor-pointer text-tertiary"
+                            className="flex cursor-pointer items-center rounded-md border-2 border-tertiary bg-gray-200 p-2 text-tertiary hover:border-secondary"
                             onClick={() => {
                                 handleOptionClick(region);
                             }}
@@ -135,7 +135,7 @@ const Filter = () => {
                     {platforms.map((platform, idx) => (
                         <div
                             key={idx}
-                            className="flex items-center p-2 border-2 bg-gray-200 border-tertiary hover:border-secondary rounded-md cursor-pointer text-tertiary"
+                            className="flex cursor-pointer items-center rounded-md border-2 border-tertiary bg-gray-200 p-2 text-tertiary hover:border-secondary"
                             onClick={() => {
                                 handleOptionClick(platform);
                             }}
@@ -206,18 +206,18 @@ const Filter = () => {
         <>
             {session && (
                 <>
-                    <div className="flex flex-row border-b border-tertiary h-32 bg-secondary text-xl min-h-fit">
+                    <div className="flex h-32 min-h-fit flex-row border-b border-tertiary bg-secondary text-xl">
                         <div
                             onClick={() => handleClick("game")}
-                            className="flex flex-1 flex-row border-r border-tertiary items-center justify-between p-4  gap-2 cursor-pointer"
+                            className="flex flex-1 cursor-pointer flex-row items-center justify-between gap-2 border-r  border-tertiary p-4"
                         >
-                            <div className="flex flex-row gap-2 bg-cover bg-no-repeat bg-center items-center">
+                            <div className="flex flex-row items-center gap-2 bg-cover bg-center bg-no-repeat">
                                 {gameImage ? (
                                     <div
                                         style={{
                                             backgroundImage: `url('${gameImage}')`,
                                         }}
-                                        className="flex items-center justify-center w-20 h-20 m-2 bg-no-repeat bg-cover bg-center rounded-md"
+                                        className="m-2 flex h-20 w-20 items-center justify-center rounded-md bg-cover bg-center bg-no-repeat"
                                     ></div>
                                 ) : (
                                     <div className="h-20"></div>
@@ -248,7 +248,7 @@ const Filter = () => {
                         </div>
                         <div
                             onClick={() => handleClick("region")}
-                            className="flex flex-1 flex-row border-r border-tertiary h-full items-center justify-between p-4 gap-2 cursor-pointer"
+                            className="flex h-full flex-1 cursor-pointer flex-row items-center justify-between gap-2 border-r border-tertiary p-4"
                         >
                             <h1 className="whitespace-nowrap">
                                 {region ? region : "Select Region"}
@@ -275,7 +275,7 @@ const Filter = () => {
                         </div>
                         <div
                             onClick={() => handleClick("platform")}
-                            className="flex flex-1 flex-row h-full items-center justify-between p-4 gap-2 cursor-pointer"
+                            className="flex h-full flex-1 cursor-pointer flex-row items-center justify-between gap-2 p-4"
                         >
                             <h1 className="whitespace-nowrap">
                                 {platform ? platform : "Select Platform"}
@@ -322,7 +322,7 @@ const Filter = () => {
                                     duration: 0.8,
                                     ease: [0.04, 0.62, 0.23, 0.98],
                                 }}
-                                className="relative z-10 flex flex-row bg-blue-50 h-44"
+                                className="relative z-10 flex h-44 flex-row bg-blue-50"
                             >
                                 <motion.div
                                     key="filtercontent"
@@ -341,7 +341,7 @@ const Filter = () => {
                                         duration: 0.5,
                                         ease: [0.04, 0.62, 0.23, 0.98],
                                     }}
-                                    className="p-4 bg-quaternary w-full whitespace-pre-wrap border-b-8 border-tertiary"
+                                    className="w-full whitespace-pre-wrap border-b-8 border-tertiary bg-quaternary p-4"
                                 >
                                     {(filter === "game" &&
                                         handleFilter(filter)) ||

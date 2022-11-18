@@ -13,9 +13,9 @@ export default function Home() {
 
     return (
         <>
-            <div className="flex bg-primary w-full p-4">
+            <div className="flex w-full bg-primary p-4">
                 {!session && (
-                    <div className="flex mx-auto items-center h-screen">
+                    <div className="mx-auto flex h-screen items-center">
                         <Auth
                             supabaseClient={supabase}
                             appearance={{
@@ -32,7 +32,7 @@ export default function Home() {
                     </div>
                 )}
                 {session && (
-                    <div className="flex flex-col w-full h-full">
+                    <div className="flex h-full w-full flex-col">
                         <Tournaments tournaments={{}} />
                     </div>
                 )}

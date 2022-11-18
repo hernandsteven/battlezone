@@ -7,11 +7,11 @@ interface TournamentsProps {
 
 export default function Tournaments({ tournaments }: TournamentsProps) {
     return (
-        <div className="flex flex-col w-4/6 self-center items-center">
-            <h1 className="text-3xl text-center font-semibold underline underline-offset-8 decoration-quaternary p-4">
+        <div className="flex w-4/6 flex-col items-center self-center">
+            <h1 className="p-4 text-center text-3xl font-semibold underline decoration-quaternary underline-offset-8">
                 Tournaments
             </h1>
-            <section className="mt-4 grid grid-cols-2 grid-flow-dense gap-16">
+            <section className="mt-4 grid grid-flow-dense grid-cols-2 gap-16">
                 <TournamentCard title="Halo Infinite HCS FFA Tournament" />
                 <TournamentCard title="Halo Infinite HCS FFA Tournament" />
                 <TournamentCard title="Halo Infinite HCS FFA Tournament" />

@@ -10,9 +10,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex h-full">
             <Sidebar />
-            <div className="flex flex-col w-full">
+            <div className="flex w-full flex-col">
                 {session && (
-                    <div className="flex flex-row p-1 gap-1 bg-primary border-b border-tertiary">
+                    <div className="flex flex-row gap-1 border-b border-tertiary bg-primary p-1">
                         <h1 className="font-semibold ">Welcome, </h1>
                         <h1 className="font-semibold text-quaternary">
                             {user?.email}

@@ -15,21 +15,21 @@ const Sidebar = () => {
     const session = useSession();
 
     return (
-        <div className="flex flex-col w-52 rounded-r-md bg-tertiary justify-between ">
+        <div className="flex w-52 flex-col justify-between rounded-r-md bg-tertiary ">
             <div>
                 <h1 className="p-4 text-3xl">BattleZone</h1>
 
-                <section className="relative flex flex-col text-base mt-4 font-semibold">
+                <section className="relative mt-4 flex flex-col text-base font-semibold">
                     <Link
                         href="/"
-                        className="flex gap-3 items-end w-full flex-row p-6 border-b border-t"
+                        className="flex w-full flex-row items-end gap-3 border-b border-t p-6"
                     >
                         <AiOutlineHome className="text-2xl" />
                         <h1>Home</h1>
                     </Link>
                     <Link
                         href="/create-tournament"
-                        className="flex gap-2 w-full flex-row p-6 whitespace-nowrap border-b"
+                        className="flex w-full flex-row gap-2 whitespace-nowrap border-b p-6"
                     >
                         <TbTournament className="text-3xl" />
                         <h1>Create</h1>
@@ -38,7 +38,7 @@ const Sidebar = () => {
             </div>
             {session && (
                 <button
-                    className="bg-quaternary border-solid border-12 border-primary p-2 ml-10 mr-10 mb-5 rounded-md"
+                    className="border-12 ml-10 mr-10 mb-5 rounded-md border-solid border-primary bg-quaternary p-2"
                     onClick={() => {
                         supabase.auth.signOut();
                     }}
