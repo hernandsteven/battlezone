@@ -17,7 +17,16 @@ const Sidebar = () => {
     return (
         <div className="flex w-52 flex-col justify-between rounded-r-md bg-tertiary ">
             <div>
-                <h1 className="p-4 text-3xl">BattleZone</h1>
+                <div className="flex flex-row items-center p-2">
+                    <div
+                        className="w-[60px] h-[60px] border bg-no-repeat bg-cover bg-center rounded"
+                        style={{
+                            backgroundImage:
+                                "url('https://t4.ftcdn.net/jpg/01/71/56/39/360_F_171563970_Ex63Cq1OKJt8rkB9CixPjwx7ye5q5Wm9.jpg')",
+                        }}
+                    ></div>
+                    <h1 className="text-2xl text-center">BattleZone</h1>
+                </div>
 
                 <section className="relative mt-4 flex flex-col text-base font-semibold">
                     <Link

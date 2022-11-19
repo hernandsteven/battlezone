@@ -6,6 +6,7 @@ import {
     useUser,
 } from "@supabase/auth-helpers-react";
 import Tournaments from "../components/Tournaments";
+import Filter from "../components/Filter";
 
 export default function Home() {
     const supabase = useSupabaseClient();
@@ -13,7 +14,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="flex w-full bg-primary p-4">
+            <div className="flex w-full bg-primary">
                 {!session && (
                     <div className="mx-auto flex h-screen items-center">
                         <Auth
@@ -33,6 +34,7 @@ export default function Home() {
                 )}
                 {session && (
                     <div className="flex h-full w-full flex-col">
+                        <Filter />
                         <Tournaments tournaments={{}} />
                     </div>
                 )}

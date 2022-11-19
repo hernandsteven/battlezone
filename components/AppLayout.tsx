@@ -12,14 +12,13 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <Sidebar />
             <div className="flex w-full flex-col">
                 {session && (
-                    <div className="flex flex-row gap-1 border-b border-tertiary bg-primary p-1">
+                    <div className="flex flex-row gap-1 bg-primary p-1">
                         <h1 className="font-semibold ">Welcome, </h1>
                         <h1 className="font-semibold text-quaternary">
                             {user?.email}
                         </h1>
                     </div>
                 )}
-                <Filter />
                 <div className="overflow-y-auto">{children}</div>
             </div>
         </div>

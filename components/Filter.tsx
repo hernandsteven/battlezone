@@ -95,7 +95,7 @@ const Filter = () => {
                     {games.map(({ title, image }, idx) => (
                         <div
                             key={idx}
-                            className="flex cursor-pointer flex-col items-center p-2 text-tertiary"
+                            className="flex cursor-pointer flex-col items-center p-2  text-tertiary"
                             onClick={() => {
                                 handleOptionClick(title);
                                 setGameImage(image);
@@ -206,7 +206,7 @@ const Filter = () => {
         <>
             {session && (
                 <>
-                    <div className="flex h-32 min-h-fit flex-row border-b border-tertiary bg-secondary text-xl">
+                    <div className="z-20 flex h-32 min-h-fit flex-row border border-tertiary bg-secondary text-xl">
                         <div
                             onClick={() => handleClick("game")}
                             className="flex flex-1 cursor-pointer flex-row items-center justify-between gap-2 border-r  border-tertiary p-4"
@@ -322,7 +322,7 @@ const Filter = () => {
                                     duration: 0.8,
                                     ease: [0.04, 0.62, 0.23, 0.98],
                                 }}
-                                className="relative z-10 flex h-44 flex-row bg-blue-50"
+                                className="z-10 flex h-44 flex-row bg-blue-50"
                             >
                                 <motion.div
                                     key="filtercontent"
