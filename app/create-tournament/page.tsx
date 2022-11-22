@@ -35,11 +35,11 @@ const CreateTournament = () => {
     };
 
     const regionOptions = [
-        { label: "Australia", value: "AU" },
-        { label: "Asia", value: "ASIA" },
-        { label: "Europe", value: "EUR" },
-        { label: "North America", value: "NA" },
-        { label: "South America", value: "SA" },
+        { label: "Australia", value: "Australia" },
+        { label: "Asia", value: "Asia" },
+        { label: "Europe", value: "Europe" },
+        { label: "North America", value: "North America" },
+        { label: "South America", value: "South America" },
     ];
     const [gameImages, setGameImages] = useState(new Map());
     const [gameOptions, setGameOptions] = useState<any>();
