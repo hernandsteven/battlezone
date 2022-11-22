@@ -1,14 +1,14 @@
-import Filter from "../components/Filter";
-import Sidebar from "../components/Sidebar";
 import "./globals.css";
 import { Provider } from "./provider";
+import "primeicons/primeicons.css";
+import "primereact/resources/themes/saga-orange/theme.css";
+import "primereact/resources/primereact.css";
 
 import {
     CookieOptions,
     createServerSupabaseClient as _createServerSupabaseClient,
 } from "@supabase/auth-helpers-shared";
 import { cookies, headers } from "next/headers";
-import { Suspense } from "react";
 import AppLayout from "../components/AppLayout";
 
 function createServerSupabaseClient<

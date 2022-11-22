@@ -12,7 +12,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <Sidebar />
             <div className="flex w-full flex-col">
                 {session && (
-                    <div className="flex flex-row gap-1 bg-primary p-1">
+                    <div className="flex flex-row gap-1 bg-primary p-1 border-b border-tertiary">
                         <h1 className="font-semibold ">Welcome, </h1>
                         <h1 className="font-semibold text-quaternary">
                             {user?.email}

@@ -2,31 +2,22 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { TbTournament } from "react-icons/tb";
 import Link from "next/link";
-import useSessionStore from "../stores/sessionStore";
-import {
-    Session,
-    useSession,
-    useSupabaseClient,
-} from "@supabase/auth-helpers-react";
-import { useEffect, useState } from "react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const Sidebar = () => {
     const supabase = useSupabaseClient();
     const session = useSession();
 
     return (
-        <div className="flex w-52 flex-col justify-between rounded-r-md bg-tertiary ">
-            <div>
-                <div className="flex flex-row items-center p-2">
-                    <div
-                        className="w-[60px] h-[60px] border bg-no-repeat bg-cover bg-center rounded"
-                        style={{
-                            backgroundImage:
-                                "url('https://t4.ftcdn.net/jpg/01/71/56/39/360_F_171563970_Ex63Cq1OKJt8rkB9CixPjwx7ye5q5Wm9.jpg')",
-                        }}
-                    ></div>
+        <div className="flex flex-col justify-between bg-tertiary ">
+            <div className="">
+                <Link href="/" className="flex flex-col items-center p-2">
+                    <img
+                        className="w-[100px] h-[100px]"
+                        src="/battlezone_logo.png"
+                    />
                     <h1 className="text-2xl text-center">BattleZone</h1>
-                </div>
+                </Link>
 
                 <section className="relative mt-4 flex flex-col text-base font-semibold">
                     <Link
@@ -47,7 +38,7 @@ const Sidebar = () => {
             </div>
             {session && (
                 <button
-                    className="border-12 ml-10 mr-10 mb-5 rounded-md border-solid border-primary bg-quaternary p-2"
+                    className="border-12 ml-10 mr-10 mb-5 rounded-md border-solid border-primary bg-quaternary p-2 whitespace-nowrap"
                     onClick={() => {
                         supabase.auth.signOut();
                     }}

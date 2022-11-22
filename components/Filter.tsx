@@ -206,7 +206,7 @@ const Filter = () => {
         <>
             {session && (
                 <>
-                    <div className="z-20 flex h-32 min-h-fit flex-row border border-tertiary bg-secondary text-xl">
+                    <div className="z-20 flex h-32 min-h-fit flex-row border-b border-tertiary bg-secondary text-xl">
                         <div
                             onClick={() => handleClick("game")}
                             className="flex flex-1 cursor-pointer flex-row items-center justify-between gap-2 border-r  border-tertiary p-4"
