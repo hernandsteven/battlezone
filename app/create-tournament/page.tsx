@@ -5,16 +5,34 @@ import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
-import {
-    useSession,
-    useSupabaseClient,
-    useUser,
-} from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { confirmDialog } from "primereact/confirmdialog"; // To use confirmDialog method
+import { ConfirmDialog } from "primereact/confirmdialog"; // To use <ConfirmDialog> tag
+import { Toast } from "primereact/toast";
 
 const CreateTournament = () => {
     const supabase = useSupabaseClient();
     const user = useUser();
-    const session = useSession();
+
+    const toast = React.useRef<any>(null);
+
+    const showSuccess = () => {
+        toast.current.show({
+            severity: "success",
+            summary: "Success",
+            detail: "Your tournament has been created",
+            life: 3000,
+        });
+    };
+
+    const showError = (err: any) => {
+        toast.current.show({
+            severity: "error",
+            summary: "Error Message",
+            detail: `${err}`,
+            life: 3000,
+        });
+    };
 
     const regionOptions = [
         { label: "Australia", value: "AU" },
@@ -38,6 +56,18 @@ const CreateTournament = () => {
     const [isPlatformDisabled, setPlaformDisabled] = useState(true);
     const [isCreateButtonDisabled, setCreateButtonDisabled] = useState(true);
     const [isTimeDisabled, setTimeDisabled] = useState(true);
+
+    const confirm = () => {
+        confirmDialog({
+            message: "Are you sure you want to proceed?",
+            header: "Create Tournament",
+            icon: "pi pi-exclamation-triangle",
+            accept: () => {
+                createTournament();
+            },
+            reject: () => {},
+        });
+    };
 
     const fetchGames = async () => {
         const { data, error } = await supabase
@@ -109,9 +139,15 @@ const CreateTournament = () => {
 
         if (error) {
             console.log(error);
+            showError(error);
         } else {
+            showSuccess();
             resetDropdowns();
         }
+    };
+
+    const handleCreateTournament = () => {
+        confirm();
     };
 
     const resetDropdowns = () => {
@@ -120,7 +156,8 @@ const CreateTournament = () => {
         setRegion("");
         setDate("");
         setTime("");
-        setParticipantCount(6);
+        setTitle("");
+        setParticipantCount(4);
     };
 
     useEffect(() => {
@@ -156,11 +193,12 @@ const CreateTournament = () => {
 
     return (
         <div className="flex h-screen w-full flex-col items-center gap-8 bg-primary p-4">
+            <Toast ref={toast} />
             <h1 className="text-3xl font-semibold underline decoration-quaternary underline-offset-8">
                 Create Tournament
             </h1>
 
-            <div className="grid grid-flow-col grid-cols-3 grid-rows-3 gap-16">
+            <div className="grid grid-flow-row grid-cols-3 grid-rows-3 gap-16">
                 <div className="flex flex-col gap-2">
                     <h1 className="text-2xl ">Title</h1>
                     <InputText
@@ -188,7 +226,7 @@ const CreateTournament = () => {
                         value={participantCount}
                         pattern="^\d*[02468]$"
                         showButtons
-                        min={6}
+                        min={4}
                         max={100}
                         onChange={(e) => setParticipantCount(e.value)}
                     />
@@ -244,11 +282,10 @@ const CreateTournament = () => {
             </div>
             <Button
                 disabled={isCreateButtonDisabled}
-                onClick={() => createTournament()}
-                className=""
-            >
-                Create
-            </Button>
+                onClick={() => handleCreateTournament()}
+                label="Create Tournament"
+            />
+            <ConfirmDialog />
         </div>
     );
 };

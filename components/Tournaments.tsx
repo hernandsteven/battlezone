@@ -18,7 +18,7 @@ interface TournamentsProps {
 export default function Tournaments({ tournaments }: TournamentsProps) {
     console.log(tournaments);
     return (
-        <div className="flex h-screen w-4/6 flex-col items-center self-center p-4">
+        <div className="flex w-4/6 flex-col items-center self-center p-4">
             <h1 className="p-4 text-center text-3xl font-semibold underline decoration-quaternary underline-offset-8">
                 Find Tournaments
             </h1>
