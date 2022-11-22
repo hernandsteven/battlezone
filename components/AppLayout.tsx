@@ -1,7 +1,6 @@
 "use client";
 import { useSession, useUser } from "@supabase/auth-helpers-react";
-import React, { useEffect } from "react";
-import Filter from "./Filter";
+import React from "react";
 import Sidebar from "./Sidebar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -12,7 +11,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <Sidebar />
             <div className="flex w-full flex-col">
                 {session && (
-                    <div className="flex flex-row gap-1 bg-primary p-1 border-b border-tertiary">
+                    <div className="flex flex-row gap-1 border-b border-tertiary bg-primary p-1">
                         <h1 className="font-semibold ">Welcome, </h1>
                         <h1 className="font-semibold text-quaternary">
                             {user?.email}
