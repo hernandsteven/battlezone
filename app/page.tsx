@@ -7,10 +7,34 @@ import {
 } from "@supabase/auth-helpers-react";
 import Tournaments from "../components/Tournaments";
 import Filter from "../components/Filter";
+import { useEffect, useState } from "react";
 
 export default function Home() {
     const supabase = useSupabaseClient();
     const session = useSession();
+    const [tournaments, setTournaments] = useState<any>([]);
+
+    // function that fetches tournaments from supabase
+
+    const fetchTournaments = async () => {
+        const { data, error } = await supabase
+            .from("tournaments")
+            .select()
+            .order("created_at", { ascending: true });
+
+        if (data) {
+            console.log(data);
+            setTournaments(data);
+        }
+
+        if (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTournaments();
+    }, []);
 
     return (
         <>
@@ -35,7 +59,7 @@ export default function Home() {
                 {session && (
                     <div className="flex h-full w-full flex-col">
                         <Filter />
-                        <Tournaments tournaments={{}} />
+                        <Tournaments tournaments={tournaments} />
                     </div>
                 )}
             </div>

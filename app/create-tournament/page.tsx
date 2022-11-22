@@ -17,11 +17,11 @@ const CreateTournament = () => {
     const session = useSession();
 
     const regionOptions = [
-        { label: "Australia", value: "AUS" },
-        { label: "Asia", value: "ASI" },
+        { label: "Australia", value: "AU" },
+        { label: "Asia", value: "ASIA" },
         { label: "Europe", value: "EUR" },
-        { label: "North America", value: "NOR" },
-        { label: "South America", value: "SOU" },
+        { label: "North America", value: "NA" },
+        { label: "South America", value: "SA" },
     ];
     const [gameImages, setGameImages] = useState(new Map());
     const [gameOptions, setGameOptions] = useState<any>();
@@ -109,7 +109,18 @@ const CreateTournament = () => {
 
         if (error) {
             console.log(error);
+        } else {
+            resetDropdowns();
         }
+    };
+
+    const resetDropdowns = () => {
+        setGame("");
+        setPlatform("");
+        setRegion("");
+        setDate("");
+        setTime("");
+        setParticipantCount(6);
     };
 
     useEffect(() => {

@@ -156,7 +156,6 @@ const Filter = () => {
             .order("title", { ascending: true });
 
         if (data) {
-            console.log(data);
             setGames(data);
         }
 

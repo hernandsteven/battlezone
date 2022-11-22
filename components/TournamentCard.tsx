@@ -2,14 +2,15 @@ import { MdDateRange } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { IoMdGlobe } from "react-icons/io";
+import moment from "moment";
 interface TournamentCardProps {
     title: string;
-    image?: string;
-    game?: string;
-    platform?: string;
-    region?: string;
-    date?: string;
-    startTime?: string;
+    image: string;
+    game: string;
+    platform: string;
+    region: string;
+    date: string;
+    time: string;
 }
 
 export default function TournamentCard({
@@ -19,15 +20,14 @@ export default function TournamentCard({
     platform,
     region,
     date,
-    startTime,
+    time,
 }: TournamentCardProps) {
     return (
         <div className="md:h-70 cursor-pointer rounded transition-all ease-in-out hover:scale-105 md:w-60 lg:h-96 lg:w-96">
             <div className="h-4/6 rounded-t-md bg-white bg-opacity-20 p-1 backdrop-blur-lg ">
                 <div
                     style={{
-                        backgroundImage:
-                            "url('https://nhygifndfvbiyhouicmk.supabase.co/storage/v1/object/public/images/games/halo-infinite.jpg?t=2022-11-15T03%3A14%3A29.994Z')",
+                        backgroundImage: `url('${image}')`,
                     }}
                     className="h-full w-full rounded-t-md bg-cover bg-center bg-no-repeat"
                 ></div>
@@ -39,23 +39,23 @@ export default function TournamentCard({
                     <div className="flex flex-row justify-between">
                         <div className="flex flex-row gap-1">
                             <IoGameControllerOutline className="h-7 w-7 text-white" />
-                            <h1>Halo Infinte</h1>
+                            <h1>{game}</h1>
                         </div>
 
                         <div className="flex flex-row gap-1">
                             <IoMdGlobe className="h-7 w-7" />
-                            <h1>South America</h1>
+                            <h1>{region}</h1>
                         </div>
                     </div>
 
                     <div className="flex flex-row justify-between">
                         <div className="flex flex-row items-center gap-1">
                             <MdDateRange className="h-7 w-7" />
-                            <h1>10/25/2022</h1>
+                            <h1>{date}</h1>
                         </div>
                         <div className="flex flex-row items-center gap-1">
                             <AiOutlineClockCircle className="h-7 w-7" />
-                            <h1>12:00 PM EST</h1>
+                            <h1>{moment(time, "HH:mm:ss").format("LT")}</h1>
                         </div>
                     </div>
                 </div>
