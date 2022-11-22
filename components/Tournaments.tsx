@@ -4,6 +4,7 @@ import TournamentCard from "./TournamentCard";
 interface TournamentsProps {
     tournaments: [
         {
+            id: number;
             title: string;
             image: string;
             game: string;
@@ -25,6 +26,7 @@ export default function Tournaments({ tournaments }: TournamentsProps) {
                 <section className="mt-4 grid grid-flow-dense grid-cols-2 gap-16">
                     {tournaments.map(
                         ({
+                            id,
                             title,
                             image,
                             game,
@@ -35,6 +37,7 @@ export default function Tournaments({ tournaments }: TournamentsProps) {
                         }) => {
                             return (
                                 <TournamentCard
+                                    id={id}
                                     title={title}
                                     image={image}
                                     game={game}

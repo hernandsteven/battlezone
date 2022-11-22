@@ -9,7 +9,7 @@ interface TournamentProps {
 }
 
 const Tournament: FC<TournamentProps> = ({ params }) => {
-    return <div>page {params.tid}</div>;
+    return <div>Tournament {params.tid}</div>;
 };
 
 export default Tournament;

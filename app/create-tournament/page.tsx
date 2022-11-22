@@ -246,7 +246,7 @@ const CreateTournament = () => {
                     <Dropdown
                         disabled={isPlatformDisabled}
                         className="w-48"
-                        placeholder="Select Region"
+                        placeholder="Select Platform"
                         value={platform}
                         options={platformOptions}
                         onChange={(e) => setPlatform(e.target.value)}
