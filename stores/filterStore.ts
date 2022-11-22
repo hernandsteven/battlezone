@@ -29,7 +29,6 @@ const useFilterStore = create<FilterState>()(
             }),
             {
                 name: "filter-storage",
-                getStorage: () => sessionStorage,
             }
         )
     )
