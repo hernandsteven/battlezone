@@ -16,9 +16,9 @@ const useFilterStore = create<FilterState>()(
     devtools(
         persist(
             (set) => ({
-                selectedGame: "",
-                selectedRegion: "",
-                selectedPlatform: "",
+                selectedGame: "All",
+                selectedRegion: "All",
+                selectedPlatform: "All",
                 selectedGameImage: "",
                 setSelectedGame: (selectedGame) => set({ selectedGame }),
                 setSelectedRegion: (selectedRegion) => set({ selectedRegion }),

@@ -1,29 +1,78 @@
 "use client";
 import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
-import {
-    useSession,
-    useSupabaseClient,
-    useUser,
-} from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Tournaments from "../components/Tournaments";
 import Filter from "../components/Filter";
 import { useEffect, useState } from "react";
+import useFilterStore from "../stores/filterStore";
 
 export default function Home() {
     const supabase = useSupabaseClient();
     const session = useSession();
     const [tournaments, setTournaments] = useState<any>([]);
 
+    const selectedGame = useFilterStore((state) => state.selectedGame);
+    const selectedRegion = useFilterStore((state) => state.selectedRegion);
+    const selectedPlatform = useFilterStore((state) => state.selectedPlatform);
     // function that fetches tournaments from supabase
 
     const fetchTournaments = async () => {
-        const { data, error } = await supabase
-            .from("tournaments")
-            .select()
-            .order("created_at", { ascending: true });
+        let query = supabase.from("tournaments").select();
+
+        if (
+            selectedGame !== "All" &&
+            selectedRegion !== "All" &&
+            selectedPlatform !== "All"
+        ) {
+            query = query
+                .eq("game", selectedGame)
+                .eq("region", selectedRegion)
+                .eq("platform", selectedPlatform);
+        } else if (
+            selectedGame === "All" &&
+            selectedRegion !== "All" &&
+            selectedPlatform !== "All"
+        ) {
+            query = query
+                .eq("region", selectedRegion)
+                .eq("platform", selectedPlatform);
+        } else if (
+            selectedGame !== "All" &&
+            selectedRegion === "All" &&
+            selectedPlatform !== "All"
+        ) {
+            query = query
+                .eq("game", selectedGame)
+                .eq("platform", selectedPlatform);
+        } else if (
+            selectedGame !== "All" &&
+            selectedRegion !== "All" &&
+            selectedPlatform === "All"
+        ) {
+            query = query.eq("game", selectedGame).eq("region", selectedRegion);
+        } else if (
+            selectedGame === "All" &&
+            selectedRegion === "All" &&
+            selectedPlatform !== "All"
+        ) {
+            query = query.eq("platform", selectedPlatform);
+        } else if (
+            selectedGame === "All" &&
+            selectedRegion !== "All" &&
+            selectedPlatform === "All"
+        ) {
+            query = query.eq("region", selectedRegion);
+        } else if (
+            selectedGame !== "All" &&
+            selectedRegion === "All" &&
+            selectedPlatform === "All"
+        ) {
+            query = query.eq("game", selectedGame);
+        }
+
+        const { data, error } = await query;
 
         if (data) {
-            console.log(data);
             setTournaments(data);
         }
 
@@ -34,7 +83,7 @@ export default function Home() {
 
     useEffect(() => {
         fetchTournaments();
-    }, []);
+    }, [selectedGame, selectedRegion, selectedPlatform]);
 
     return (
         <>

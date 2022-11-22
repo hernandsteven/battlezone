@@ -3,6 +3,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { BsArrowDownShort } from "react-icons/bs";
+import { GrGamepad } from "react-icons/gr";
 import useFilterStore from "../stores/filterStore";
 
 const Filter = () => {
@@ -76,10 +77,8 @@ const Filter = () => {
     const handleOptionClick = (option: string) => {
         if (filter === "game") {
             setSelectedGame(option);
-            handleClick("region");
         } else if (filter === "region") {
             setSelectedRegion(option);
-            handleClick("platform");
         } else if (filter === "platform") {
             setSelectedPlatform(option);
             setFilter("");
@@ -92,6 +91,21 @@ const Filter = () => {
         if (filterType === "game") {
             return (
                 <div className="flex max-w-[40rem] flex-row">
+                    <div
+                        className="flex cursor-pointer flex-col items-center p-2  text-tertiary"
+                        onClick={() => {
+                            handleOptionClick("All");
+                            setGameImage("");
+                            setSelectedGameImage("");
+                        }}
+                    >
+                        <div className="m-2 flex h-20 w-20 items-center justify-center rounded-md border-2 border-tertiary bg-white bg-cover bg-center bg-no-repeat">
+                            <GrGamepad className="text-4xl" />
+                        </div>
+                        <h1 className="pl-4 pr-4 text-sm font-semibold leading-none">
+                            All
+                        </h1>
+                    </div>
                     {games.map(({ title, image }, idx) => (
                         <div
                             key={idx}
@@ -116,6 +130,14 @@ const Filter = () => {
         } else if (filterType === "region") {
             return (
                 <div className="flex flex-row gap-2">
+                    <div
+                        className="flex cursor-pointer items-center rounded-md border-2 border-tertiary bg-gray-200 p-2 text-tertiary hover:border-secondary"
+                        onClick={() => {
+                            handleOptionClick("All");
+                        }}
+                    >
+                        <h1 className="text-md font-semibold">All</h1>
+                    </div>
                     {regions.map((region, idx) => (
                         <div
                             key={idx}
@@ -132,6 +154,14 @@ const Filter = () => {
         } else if (filterType === "platform") {
             return (
                 <div className="flex flex-row gap-2">
+                    <div
+                        className="flex cursor-pointer items-center rounded-md border-2 border-tertiary bg-gray-200 p-2 text-tertiary hover:border-secondary"
+                        onClick={() => {
+                            handleOptionClick("All");
+                        }}
+                    >
+                        <h1 className="text-md font-semibold">All</h1>
+                    </div>
                     {platforms.map((platform, idx) => (
                         <div
                             key={idx}
@@ -188,7 +218,7 @@ const Filter = () => {
     // Fetches platforms when selected game changes and resets selected platform
     useEffect(() => {
         fetchPlatforms();
-        setSelectedPlatform("");
+        setSelectedPlatform("All");
     }, [selectedGame]);
 
     // If user is signed in, fetch their games from cache
