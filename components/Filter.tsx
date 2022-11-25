@@ -252,7 +252,9 @@ const Filter = () => {
                                     <div className="h-20"></div>
                                 )}
                                 <h1 className="whitespace-nowrap">
-                                    {game ? game : "Select Game"}
+                                    {game === "All" || !game
+                                        ? "Select Game"
+                                        : game}
                                 </h1>
                             </div>
                             <motion.div
@@ -280,7 +282,9 @@ const Filter = () => {
                             className="flex h-full flex-1 cursor-pointer flex-row items-center justify-between gap-2 border-r border-tertiary p-4"
                         >
                             <h1 className="whitespace-nowrap">
-                                {region ? region : "Select Region"}
+                                {region === "All" || !region
+                                    ? "Select Region"
+                                    : region}
                             </h1>
                             <motion.div
                                 animate={{
@@ -307,7 +311,9 @@ const Filter = () => {
                             className="flex h-full flex-1 cursor-pointer flex-row items-center justify-between gap-2 p-4"
                         >
                             <h1 className="whitespace-nowrap">
-                                {platform ? platform : "Select Platform"}
+                                {platform === "All" || !platform
+                                    ? "Select Platform"
+                                    : platform}
                             </h1>
                             <motion.div
                                 animate={{
