@@ -70,7 +70,9 @@ export default function Home() {
             query = query.eq("game", selectedGame);
         }
 
-        const { data, error } = await query;
+        const { data, error } = await query.order("date", {
+            ascending: true,
+        });
 
         if (data) {
             setTournaments(data);
