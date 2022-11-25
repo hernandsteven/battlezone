@@ -9,10 +9,12 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { confirmDialog } from "primereact/confirmdialog"; // To use confirmDialog method
 import { ConfirmDialog } from "primereact/confirmdialog"; // To use <ConfirmDialog> tag
 import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
 
 const CreateTournament = () => {
     const supabase = useSupabaseClient();
     const user = useUser();
+    const router = useRouter();
 
     const toast = React.useRef<any>(null);
 
@@ -161,6 +163,10 @@ const CreateTournament = () => {
     };
 
     useEffect(() => {
+        if (!user) {
+            router.push("/");
+        }
+
         fetchGames();
     }, []);
 
@@ -192,101 +198,105 @@ const CreateTournament = () => {
     }, [title, game, platform, region, date, time]);
 
     return (
-        <div className="flex h-screen w-full flex-col items-center gap-8 bg-primary p-4">
-            <Toast ref={toast} />
-            <h1 className="text-3xl font-semibold underline decoration-quaternary underline-offset-8">
-                Create Tournament
-            </h1>
+        <>
+            {user && (
+                <div className="flex h-screen w-full flex-col items-center gap-8 bg-primary p-4">
+                    <Toast ref={toast} />
+                    <h1 className="text-3xl font-semibold underline decoration-quaternary underline-offset-8">
+                        Create Tournament
+                    </h1>
 
-            <div className="grid grid-flow-row grid-cols-3 grid-rows-3 gap-16">
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Title</h1>
-                    <InputText
-                        className="w-48"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g) Halo HCS FFA "
-                        maxLength={30}
+                    <div className="grid grid-flow-row grid-cols-3 grid-rows-3 gap-16">
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Title</h1>
+                            <InputText
+                                className="w-48"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="e.g) Halo HCS FFA "
+                                maxLength={30}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Game</h1>
+                            <Dropdown
+                                className="w-48"
+                                placeholder="Select Game"
+                                value={game}
+                                options={gameOptions}
+                                onChange={(e) => setGame(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Participants</h1>
+                            <InputNumber
+                                className="w-48"
+                                value={participantCount}
+                                pattern="^\d*[02468]$"
+                                showButtons
+                                min={4}
+                                max={100}
+                                onChange={(e) => setParticipantCount(e.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Region</h1>
+                            <Dropdown
+                                className="w-48"
+                                placeholder="Select Region"
+                                value={region}
+                                options={regionOptions}
+                                onChange={(e) => setRegion(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Platform</h1>
+                            <Dropdown
+                                disabled={isPlatformDisabled}
+                                className="w-48"
+                                placeholder="Select Platform"
+                                value={platform}
+                                options={platformOptions}
+                                onChange={(e) => setPlatform(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Start Date</h1>
+                            <Calendar
+                                className="w-48"
+                                showIcon
+                                minDate={new Date()}
+                                value={date}
+                                onChange={(e) => setDate(e.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl ">Start Time</h1>
+                            <Calendar
+                                disabled={isTimeDisabled}
+                                className="w-48"
+                                icon="pi pi-clock"
+                                showIcon
+                                timeOnly
+                                minDate={date}
+                                showTime
+                                hourFormat="12"
+                                value={time}
+                                onChange={(e) => {
+                                    setTime(e.value);
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <Button
+                        disabled={isCreateButtonDisabled}
+                        onClick={() => handleCreateTournament()}
+                        label="Create Tournament"
                     />
+                    <ConfirmDialog />
                 </div>
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Game</h1>
-                    <Dropdown
-                        className="w-48"
-                        placeholder="Select Game"
-                        value={game}
-                        options={gameOptions}
-                        onChange={(e) => setGame(e.target.value)}
-                    />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Participants</h1>
-                    <InputNumber
-                        className="w-48"
-                        value={participantCount}
-                        pattern="^\d*[02468]$"
-                        showButtons
-                        min={4}
-                        max={100}
-                        onChange={(e) => setParticipantCount(e.value)}
-                    />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Region</h1>
-                    <Dropdown
-                        className="w-48"
-                        placeholder="Select Region"
-                        value={region}
-                        options={regionOptions}
-                        onChange={(e) => setRegion(e.target.value)}
-                    />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Platform</h1>
-                    <Dropdown
-                        disabled={isPlatformDisabled}
-                        className="w-48"
-                        placeholder="Select Platform"
-                        value={platform}
-                        options={platformOptions}
-                        onChange={(e) => setPlatform(e.target.value)}
-                    />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Start Date</h1>
-                    <Calendar
-                        className="w-48"
-                        showIcon
-                        minDate={new Date()}
-                        value={date}
-                        onChange={(e) => setDate(e.value)}
-                    />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-2xl ">Start Time</h1>
-                    <Calendar
-                        disabled={isTimeDisabled}
-                        className="w-48"
-                        icon="pi pi-clock"
-                        showIcon
-                        timeOnly
-                        minDate={date}
-                        showTime
-                        hourFormat="12"
-                        value={time}
-                        onChange={(e) => {
-                            setTime(e.value);
-                        }}
-                    />
-                </div>
-            </div>
-            <Button
-                disabled={isCreateButtonDisabled}
-                onClick={() => handleCreateTournament()}
-                label="Create Tournament"
-            />
-            <ConfirmDialog />
-        </div>
+            )}
+        </>
     );
 };
 
