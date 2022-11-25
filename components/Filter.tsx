@@ -50,7 +50,9 @@ const Filter = () => {
         "Australia",
         "South America",
     ]);
-    const [platforms, setPlatforms] = useState<string[]>([]);
+    const allPlatforms = ["PC", "PlayStation", "Xbox", "Switch"];
+
+    const [platforms, setPlatforms] = useState<string[]>(allPlatforms);
 
     const handleClick = (filterType: string) => {
         // If the filter is already open, close it and clear the filter state
@@ -154,14 +156,16 @@ const Filter = () => {
         } else if (filterType === "platform") {
             return (
                 <div className="flex flex-row gap-2">
-                    <div
-                        className="flex cursor-pointer items-center rounded-md border-2 border-tertiary bg-gray-200 p-2 text-tertiary hover:border-secondary"
-                        onClick={() => {
-                            handleOptionClick("All");
-                        }}
-                    >
-                        <h1 className="text-md font-semibold">All</h1>
-                    </div>
+                    {selectedGame === "All" && (
+                        <div
+                            className="flex cursor-pointer items-center rounded-md border-2 border-tertiary bg-gray-200 p-2 text-tertiary hover:border-secondary"
+                            onClick={() => {
+                                handleOptionClick("All");
+                            }}
+                        >
+                            <h1 className="text-md font-semibold">All</h1>
+                        </div>
+                    )}
                     {platforms.map((platform, idx) => (
                         <div
                             key={idx}
@@ -217,7 +221,11 @@ const Filter = () => {
 
     // Fetches platforms when selected game changes and resets selected platform
     useEffect(() => {
-        fetchPlatforms();
+        if (selectedGame === "All") {
+            setPlatforms(allPlatforms);
+        } else {
+            fetchPlatforms();
+        }
         setSelectedPlatform("All");
     }, [selectedGame]);
 

@@ -86,32 +86,30 @@ export default function Home() {
     }, [selectedGame, selectedRegion, selectedPlatform]);
 
     return (
-        <>
-            <div className="flex min-h-screen w-full bg-primary">
-                {!session && (
-                    <div className="mx-auto flex h-screen items-center">
-                        <Auth
-                            supabaseClient={supabase}
-                            appearance={{
-                                theme: ThemeSupa,
-                                style: {
-                                    button: {
-                                        background: "orange",
-                                        borderColor: "orange",
-                                    },
+        <div className="flex min-h-screen w-full bg-primary">
+            {!session && (
+                <div className="mx-auto flex h-screen items-center">
+                    <Auth
+                        supabaseClient={supabase}
+                        appearance={{
+                            theme: ThemeSupa,
+                            style: {
+                                button: {
+                                    background: "orange",
+                                    borderColor: "orange",
                                 },
-                            }}
-                            theme="dark"
-                        />
-                    </div>
-                )}
-                {session && (
-                    <div className="flex h-full w-full flex-col overflow-auto">
-                        <Filter />
-                        <Tournaments tournaments={tournaments} />
-                    </div>
-                )}
-            </div>
-        </>
+                            },
+                        }}
+                        theme="dark"
+                    />
+                </div>
+            )}
+            {session && (
+                <div className="flex h-full w-full flex-col overflow-auto">
+                    <Filter />
+                    <Tournaments tournaments={tournaments} />
+                </div>
+            )}
+        </div>
     );
 }

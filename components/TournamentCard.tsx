@@ -37,7 +37,7 @@ export default function TournamentCard({
     return (
         <div
             onClick={handleClick}
-            className="md:h-70 cursor-pointer whitespace-nowrap rounded transition-all ease-in-out hover:scale-105 md:w-60 lg:h-96 lg:w-96"
+            className="cursor-pointer overflow-hidden whitespace-nowrap rounded transition-all ease-in-out  hover:scale-105 md:h-96 md:w-96 "
         >
             <div className="h-4/6 rounded-t-md bg-white bg-opacity-20 p-1 backdrop-blur-lg ">
                 <div

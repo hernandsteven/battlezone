@@ -18,12 +18,12 @@ interface TournamentsProps {
 
 export default function Tournaments({ tournaments }: TournamentsProps) {
     return (
-        <div className="flex w-4/6 flex-col items-center self-center p-4">
+        <div className="flex w-full flex-col items-center self-center overflow-hidden p-8">
             <h1 className="p-4 text-center text-3xl font-semibold underline decoration-quaternary underline-offset-8">
                 Find Tournaments
             </h1>
             {tournaments.length > 0 ? (
-                <section className="mt-4 grid grid-flow-dense grid-cols-2 gap-16">
+                <section className="mt-4 grid grid-flow-dense grid-cols-2 gap-16 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     {tournaments.map(
                         ({
                             id,
@@ -51,7 +51,7 @@ export default function Tournaments({ tournaments }: TournamentsProps) {
                     )}
                 </section>
             ) : (
-                <h1 className="text-2xl font-semibold">
+                <h1 className=" text-2xl font-semibold">
                     Oops, seems like there were no tournaments found
                 </h1>
             )}
