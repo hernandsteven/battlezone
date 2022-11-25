@@ -274,6 +274,7 @@ const CreateTournament = () => {
                             <h1 className="text-2xl ">Start Time</h1>
                             <Calendar
                                 disabled={isTimeDisabled}
+                                stepMinute={15}
                                 className="w-48"
                                 icon="pi pi-clock"
                                 showIcon
