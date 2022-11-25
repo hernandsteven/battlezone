@@ -18,7 +18,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
                         </h1>
                     </div>
                 )}
-                <div className="overflow-y-auto">{children}</div>
+                <div className="overflow-auto">{children}</div>
             </div>
         </div>
     );
