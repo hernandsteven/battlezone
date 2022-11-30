@@ -18,7 +18,7 @@ interface TournamentsProps {
 
 export default function Tournaments({ tournaments }: TournamentsProps) {
     return (
-        <div className="mb-10 flex w-full flex-col items-center self-center overflow-x-hidden">
+        <div className="mb-10 flex w-full flex-col items-center self-center overflow-hidden p-4">
             <h1 className="p-4 text-center text-3xl font-semibold underline decoration-quaternary underline-offset-8">
                 Find Tournaments
             </h1>

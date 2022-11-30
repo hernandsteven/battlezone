@@ -107,7 +107,7 @@ export default function Home() {
                 </div>
             )}
             {session && (
-                <div className="flex h-full w-full flex-col overflow-auto">
+                <div className="flex h-full w-full flex-col">
                     <Filter />
                     <Tournaments tournaments={tournaments} />
                 </div>
