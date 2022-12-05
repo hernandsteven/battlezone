@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
@@ -48,6 +49,7 @@ const CreateTournament = () => {
     const [platformOptions, setPlatformOptions] = useState<any>();
 
     const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const [game, setGame] = useState("");
     const [platform, setPlatform] = useState("");
     const [region, setRegion] = useState("");
@@ -121,6 +123,7 @@ const CreateTournament = () => {
         const tournamentData = {
             user_id: user?.id,
             title: title,
+            description: description,
             image: gameImages.get(game),
             game: game,
             region: region,
@@ -215,6 +218,16 @@ const CreateTournament = () => {
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="e.g) Halo HCS FFA "
                                 maxLength={30}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <h1 className="text-2xl ">Description</h1>
+                            <InputTextarea
+                                className="w-64"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                maxLength={120}
                             />
                         </div>
                         <div className="flex flex-col gap-2">

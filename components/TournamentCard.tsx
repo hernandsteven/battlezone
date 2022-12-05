@@ -40,11 +40,9 @@ export default function TournamentCard({
             className="cursor-pointer overflow-hidden whitespace-nowrap rounded transition-all ease-in-out  hover:scale-105 md:h-96 md:w-96 "
         >
             <div className="h-4/6 rounded-t-md bg-white bg-opacity-20 p-1 backdrop-blur-lg ">
-                <div
-                    style={{
-                        backgroundImage: `url('${image}')`,
-                    }}
-                    className="h-full w-full rounded-t-md bg-cover bg-center bg-no-repeat"
+                <img
+                    src={image}
+                    className="h-full w-full rounded-t-md object-cover"
                 />
             </div>
             <div className="mt-1 flex h-2/6 flex-col gap-1 rounded-b-md bg-quaternary bg-opacity-70 p-2 backdrop-blur-lg ">
