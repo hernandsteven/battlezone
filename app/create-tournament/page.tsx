@@ -163,6 +163,7 @@ const CreateTournament = () => {
         setTime("");
         setTitle("");
         setParticipantCount(4);
+        setDescription("");
     };
 
     useEffect(() => {
@@ -217,7 +218,7 @@ const CreateTournament = () => {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="e.g) Halo HCS FFA "
-                                maxLength={30}
+                                maxLength={50}
                             />
                         </div>
                         <div className="flex flex-col">
@@ -227,7 +228,7 @@ const CreateTournament = () => {
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                                maxLength={120}
+                                maxLength={500}
                             />
                         </div>
                         <div className="flex flex-col gap-2">
