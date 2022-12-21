@@ -108,9 +108,7 @@ export default function Home() {
             )}
             {session && (
                 <div className="flex h-full w-full flex-col">
-                    <p>Hello World</p>
                     <Filter />
-
                     <Tournaments tournaments={tournaments} />
                 </div>
             )}
