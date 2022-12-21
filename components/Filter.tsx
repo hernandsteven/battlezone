@@ -43,7 +43,7 @@ const Filter = () => {
     }
 
     const [games, setGames] = useState<GameStructure[]>([]);
-    const [regions, setRegions] = useState([
+    const [regions, _] = useState([
         "North America",
         "Europe",
         "Asia",
