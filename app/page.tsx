@@ -14,72 +14,40 @@ export default function Home() {
     const selectedGame = useFilterStore((state) => state.selectedGame);
     const selectedRegion = useFilterStore((state) => state.selectedRegion);
     const selectedPlatform = useFilterStore((state) => state.selectedPlatform);
-    // function that fetches tournaments from supabase
+
+    interface Filter {
+        game?: string;
+        region?: string;
+        platform?: string;
+    }
 
     const fetchTournaments = async () => {
         let query = supabase.from("tournaments").select();
 
-        if (
-            selectedGame !== "All" &&
-            selectedRegion !== "All" &&
-            selectedPlatform !== "All"
-        ) {
-            query = query
-                .eq("game", selectedGame)
-                .eq("region", selectedRegion)
-                .eq("platform", selectedPlatform);
-        } else if (
-            selectedGame === "All" &&
-            selectedRegion !== "All" &&
-            selectedPlatform !== "All"
-        ) {
-            query = query
-                .eq("region", selectedRegion)
-                .eq("platform", selectedPlatform);
-        } else if (
-            selectedGame !== "All" &&
-            selectedRegion === "All" &&
-            selectedPlatform !== "All"
-        ) {
-            query = query
-                .eq("game", selectedGame)
-                .eq("platform", selectedPlatform);
-        } else if (
-            selectedGame !== "All" &&
-            selectedRegion !== "All" &&
-            selectedPlatform === "All"
-        ) {
-            query = query.eq("game", selectedGame).eq("region", selectedRegion);
-        } else if (
-            selectedGame === "All" &&
-            selectedRegion === "All" &&
-            selectedPlatform !== "All"
-        ) {
-            query = query.eq("platform", selectedPlatform);
-        } else if (
-            selectedGame === "All" &&
-            selectedRegion !== "All" &&
-            selectedPlatform === "All"
-        ) {
-            query = query.eq("region", selectedRegion);
-        } else if (
-            selectedGame !== "All" &&
-            selectedRegion === "All" &&
-            selectedPlatform === "All"
-        ) {
-            query = query.eq("game", selectedGame);
+        // Use an object to store the filter criteria
+        let filter: Filter = {};
+
+        if (selectedGame !== "All") {
+            filter.game = selectedGame;
+        }
+        if (selectedRegion !== "All") {
+            filter.region = selectedRegion;
+        }
+        if (selectedPlatform !== "All") {
+            filter.platform = selectedPlatform;
         }
 
-        const { data, error } = await query.order("date", {
+        // Apply the filter object to the query
+        for (let [key, value] of Object.entries(filter)) {
+            // Apply each pair to the query using eq method
+            query = query.eq(key, value);
+        }
+        const { data } = await query.order("date", {
             ascending: true,
         });
 
         if (data) {
             setTournaments(data);
-        }
-
-        if (error) {
-            console.log(error);
         }
     };
 
